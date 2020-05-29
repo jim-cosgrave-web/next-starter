@@ -1,15 +1,10 @@
 import { NextApiRequest, NextApiResponse, NextApiHandler } from 'next';
 import { MongoClient } from 'mongodb';
-import { verify } from 'jsonwebtoken';
 import { authenticate } from '../../../middleware/authenticate';
+import { database, MyNextApiRequest } from '../../../middleware/database';
 
-const client = new MongoClient(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-export default authenticate(async function groceriesList(
-    req: NextApiRequest,
+export default authenticate(database(async function groceriesList(
+    req: MyNextApiRequest,
     res: NextApiResponse
 ) {
     if (req.method != 'GET') {
@@ -17,12 +12,9 @@ export default authenticate(async function groceriesList(
         return;
     }
 
-    if (!client.isConnected()) {
-        await client.connect();
-    }
-
-    const db = client.db('groceriesDB');
-    const groceries = await db.collection('groceries').find().toArray();
+    const db = req.db;
+    const collection = db.collection('groceries');
+    const groceries = await collection.find().toArray();
 
     res.json(groceries);
-});
+}));

@@ -1,14 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 import { hash } from 'bcrypt';
+import { database, MyNextApiRequest } from '../../../middleware/database';
 
-const client = new MongoClient(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-export default async function signup(
-    req: NextApiRequest,
+export default database(async function signup(
+    req: MyNextApiRequest,
     res: NextApiResponse
 ) {
     if(req.method != 'POST') {
@@ -36,12 +32,9 @@ export default async function signup(
         return;
     }
 
-    if (!client.isConnected()) {
-        await client.connect();
-    }
-
-    const db = client.db('groceriesDB');
-    const existingUser = await db.collection('users').findOne({ "email": email });
+    const db = req.db;
+    const collection = db.collection('users');
+    const existingUser = await collection.findOne({ "email": email });
 
     if (existingUser) {
         res.json({ status: 'Email address already in use' });
@@ -55,9 +48,9 @@ export default async function signup(
                 stores: []
             };
 
-            await db.collection('users').insertOne(user);
+            await collection.insertOne(user);
 
             res.json({status: 'ok'});
         });
     }
-}
+});

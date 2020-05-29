@@ -2,14 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
+import { database, MyNextApiRequest } from '../../../middleware/database';
 
-const client = new MongoClient(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-export default async function login(
-    req: NextApiRequest,
+export default database(async function login(
+    req: MyNextApiRequest,
     res: NextApiResponse
 ) {
     if(req.method != 'POST') {
@@ -28,11 +24,7 @@ export default async function login(
         return;
     }
 
-    if (!client.isConnected()) {
-        await client.connect();
-    }
-
-    const db = client.db('groceriesDB');
+    const db = req.db;
     const existingUser = await db.collection('users').findOne({ "email": email });
 
     if (!existingUser) {
@@ -55,4 +47,4 @@ export default async function login(
             }
         });
     }
-}
+});
