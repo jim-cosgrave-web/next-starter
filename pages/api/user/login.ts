@@ -3,6 +3,7 @@ import { MongoClient } from 'mongodb';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { database, MyNextApiRequest } from '../../../middleware/database';
+import cookie from 'cookie';
 
 export default database(async function login(
     req: MyNextApiRequest,
@@ -41,7 +42,16 @@ export default database(async function login(
                 const claims = { sub: existingUser._id, name: existingUser.name, email: existingUser.email };
                 const jwt = sign(claims, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-                res.json({ authToken: jwt });
+                res.setHeader('Set-Cookie', cookie.serialize('auth', jwt, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV !== 'development',
+                    sameSite: 'strict',
+                    maxAge: 3600,
+                    path: '/'
+                }));
+
+                //res.json({ authToken: jwt });
+                res.json({status: 'Logged in'});
             } else {
                 res.json( {status: 'Oops.  Something went wrong'});
             }

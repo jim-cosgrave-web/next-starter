@@ -2,7 +2,21 @@ import { verify } from 'jsonwebtoken';
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 
 const authenticate = (fn: NextApiHandler) => async (req: NextApiRequest, res: NextApiResponse) => {
-    verify(req.headers.authorization, process.env.JWT_SECRET, async function (err, decoded) {
+    //
+    // With header
+    //
+    // verify(req.headers.authorization, process.env.JWT_SECRET, async function (err, decoded) {
+    //     if (!err && decoded) {
+    //         return await fn(req, res);
+    //     }
+
+    //     res.status(401).json({ message: 'Sorry you are not authenticated' });
+    // });
+
+    //
+    // With cookie
+    //
+    verify(req.cookies.auth, process.env.JWT_SECRET, async function (err, decoded) {
         if (!err && decoded) {
             return await fn(req, res);
         }

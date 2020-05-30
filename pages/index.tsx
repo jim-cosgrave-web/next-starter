@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Head from 'next/head';
-import fetch from 'isomorphic-unfetch';
-
-//https://next-mongodb-nine.now.sh/api/daily
-//http://localhost:3000/api/daily'
-
-//const apiUrl = 'https://next-mongodb-nine.now.sh/api/daily';
-const apiUrl = 'http://localhost:3000/api/daily';
+import React from 'react';
+import Link from 'next/link';
 
 const Index = () => {
     return (
         <div>
-            Index Page
+            <h1>Index Page</h1>
+            <Link href="/groceries">
+                <a>Groceries</a>
+            </Link>
         </div>
     )
 }
