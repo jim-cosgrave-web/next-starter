@@ -10,7 +10,7 @@ export default database(async function login(
     res: NextApiResponse
 ) {
     if(req.method != 'POST') {
-        res.json({status: 'POST only'});
+        res.status(500).json({status: 'POST only'});
         return;
     }
 
@@ -21,7 +21,7 @@ export default database(async function login(
     // Validate that parameters were supplied
     //
     if (!email || email.trim().length == 0 || !password || password.trim().length == 0) {
-        res.json({ status: 'Name, email, and password are all required' });
+        res.status(500).json({ status: 'Name, email, and password are all required' });
         return;
     }
 
@@ -29,7 +29,7 @@ export default database(async function login(
     const existingUser = await db.collection('users').findOne({ "email": email });
 
     if (!existingUser) {
-        res.json({ status: 'Unsuccessful login' });
+        res.status(401).json({ status: 'Unsuccessful login' });
     } else {
         compare(password, existingUser.password, function(err, result) {
             //
@@ -51,9 +51,9 @@ export default database(async function login(
                 }));
 
                 //res.json({ authToken: jwt });
-                res.json({status: 'Logged in'});
+                res.status(200).json({status: 'Logged in'});
             } else {
-                res.json( {status: 'Oops.  Something went wrong'});
+                res.status(401).json( {status: 'Oops.  Something went wrong'});
             }
         });
     }
