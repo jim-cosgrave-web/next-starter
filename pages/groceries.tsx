@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { NextPageContext, NextPage } from 'next';
 import { myGet } from '../util/myGet';
+import { env } from '../util/environment';
 
-//const apiUrl = 'https://next-mongodb-nine.now.sh/api/daily';
-const apiUrl = 'http://localhost:3000/api/groceries';
+const apiUrl = env.apiUrl + 'groceries';
 
 const Groceries = ({ groceries }) => {
     return (

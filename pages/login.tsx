@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
+import { env } from '../util/environment';
 
-//const apiUrl = 'https://next-mongodb-nine.now.sh/api/daily';
-const apiUrl = 'http://localhost:3000/api/user/login';
+const apiUrl = env.apiUrl + 'user/login';
 
 const Login = () => {
     const emailRef = useRef<HTMLInputElement>(null);

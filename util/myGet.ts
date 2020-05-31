@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-unfetch';
 import { NextPageContext } from "next";
 import Router from "next/router";
+import { env } from '../util/environment';
 
 export async function myGet(url: string, ctx: NextPageContext) {
     const cookie = ctx.req?.headers.cookie;
@@ -18,7 +19,7 @@ export async function myGet(url: string, ctx: NextPageContext) {
 
     if(resp.status === 401 && ctx.req) {
         ctx.res.writeHead(302, {
-           Location: 'http://localhost:3000/login' 
+           Location: env.siteUrl + 'login'
         });
 
         ctx.res?.end();
