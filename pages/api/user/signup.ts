@@ -8,7 +8,7 @@ export default database(async function signup(
     res: NextApiResponse
 ) {
     if(req.method != 'POST') {
-        res.json({status: 'POST only'});
+        res.status(500).json({status: 'POST only'});
         return;
     }
 
@@ -20,7 +20,7 @@ export default database(async function signup(
     // Validate that parameters were supplied
     //
     if (!name || name.trim().length == 0 || !email || email.trim().length == 0 || !password || password.trim().length == 0) {
-        res.json({ status: 'Name, email, and password are all required' });
+        res.status(500).json({ status: 'Name, email, and password are all required' });
         return;
     }
 
@@ -28,7 +28,7 @@ export default database(async function signup(
     // Validate password length
     //
     if(password.length < 10) {
-        res.json({ status: 'Password must be at least 10 characters long'});
+        res.status(500).json({ status: 'Password must be at least 10 characters long'});
         return;
     }
 
@@ -37,7 +37,7 @@ export default database(async function signup(
     const existingUser = await collection.findOne({ "email": email });
 
     if (existingUser) {
-        res.json({ status: 'Email address already in use' });
+        res.status(500).json({ status: 'Email address already in use' });
     } else {
         hash(req.body.password, 10, async function (err, hash) {
             const user = {
@@ -50,7 +50,7 @@ export default database(async function signup(
 
             await collection.insertOne(user);
 
-            res.json({status: 'ok'});
+            res.status(200).json({status: 'ok'});
         });
     }
 });
