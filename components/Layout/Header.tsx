@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faListOl } from '@fortawesome/free-solid-svg-icons';
+import { faListOl, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { env } from './../../util/environment';
+import fetch from 'isomorphic-unfetch';
 
 const Header = () => {
     const [hidden, setHidden] = useState(true);
+    const router = useRouter();
 
     function hiddenClass() {
         let menuClass = 'slide-hidden';
 
-        if(!hidden) {
+        if (!hidden) {
             menuClass = 'slide-shown';
         }
 
@@ -19,7 +23,7 @@ const Header = () => {
     function overlayClass() {
         let overlay = 'overlay-hidden';
 
-        if(!hidden) {
+        if (!hidden) {
             overlay = 'overlay-shown';
         }
 
@@ -30,12 +34,17 @@ const Header = () => {
         setHidden(!hidden);
     }
 
+    function handleSignOut() {
+        fetch(env.apiUrl + 'user/logout');
+        router.push('/login');
+    }
+
     return (
         <div className="menu-test">
             <div id="menu-overlay" className={overlayClass()} onClick={handleToggleMenu}></div>
             <div id="slide" className={hiddenClass()}>
                 <div className="close-btn-wrapper" onClick={handleToggleMenu}>
-                    <span style={{"position": "absolute", "top": "6px", "right": "14px"}}>
+                    <span style={{ "position": "absolute", "top": "6px", "right": "14px" }}>
                         <span className="close-cross close-cross-1"></span>
                         <span className="close-cross close-cross-2"></span>
                     </span>
@@ -49,6 +58,10 @@ const Header = () => {
                                 <a>Groceries</a>
                             </div>
                         </Link>
+                        <div className="nav-item" onClick={handleSignOut}>
+                            <FontAwesomeIcon icon={faSignOutAlt} />
+                            <a>Sign Out</a>
+                        </div>
                     </nav>
                 </div>
             </div>

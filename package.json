@@ -25,6 +25,7 @@
     "mongodb": "^3.5.7",
     "next": "^9.4.2",
     "next-connect": "^0.6.6",
+    "next-pwa": "^2.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
