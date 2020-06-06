@@ -13,19 +13,26 @@ export async function myGet(url: string, ctx: NextPageContext) {
     });
 
     if(resp.status === 401 && !ctx.req) {
+        //
+        // Client side
+        //
         Router.replace('/login');
         return;
-    }
 
-    if(resp.status === 401 && ctx.req) {
+       // return { status: 'First one!!!' };
+    } else if(resp.status === 401 && ctx.req) {
+        //
+        // Server side
+        //
         ctx.res.writeHead(302, {
            Location: env.siteUrl + 'login'
         });
 
-        ctx.res?.end();
-        return;
+         ctx.res?.end();
+//        return;
+         //return { status: 'Second one' };
+    } else {
+        const json = await resp.json();
+        return json;
     }
-
-    const json = await resp.json();
-    return json;
 }

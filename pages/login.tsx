@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import fetch from 'isomorphic-unfetch';
 import Router from 'next/router';
 import { env } from '../util/environment';
+import Link from 'next/link';
 
 const loginApiUrl = env.apiUrl + 'user/login';
 const signUpApiUrl = env.apiUrl + 'user/signup';
@@ -139,6 +140,9 @@ const Login = () => {
                 <div className="login-top"></div>
                 <div className="login-left">
                     <div className="login-left-wrapper">
+                    <Link href="/">
+                        <a>Index</a>
+                    </Link>
                         <h1>Log in to your account</h1>
                         <div className="login-form">
                             {errorMessageHTML()}

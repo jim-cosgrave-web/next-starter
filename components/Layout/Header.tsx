@@ -52,10 +52,16 @@ const Header = () => {
                 </div>
                 <div className="menu-nav-wrapper">
                     <nav>
-                        <Link href="/groceries">
+                    <Link href="/groceries">
                             <div className="nav-item">
                                 <FontAwesomeIcon icon={faListOl} />
                                 <a>Groceries</a>
+                            </div>
+                        </Link>
+                        <Link href="/">
+                            <div className="nav-item">
+                                <FontAwesomeIcon icon={faListOl} />
+                                <a>Index</a>
                             </div>
                         </Link>
                         <div className="nav-item" onClick={handleSignOut}>

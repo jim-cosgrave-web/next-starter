@@ -6,6 +6,10 @@ import { env } from '../util/environment';
 const apiUrl = env.apiUrl + 'groceries';
 
 const Groceries = ({ groceries }) => {
+    useEffect(() => {
+        console.log('first thing');
+    }, []);
+
     return (
         <div>
             Groceries Page
