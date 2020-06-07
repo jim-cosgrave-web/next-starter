@@ -40,7 +40,7 @@ const Header = () => {
     }
 
     return (
-        <div className="menu-test">
+        <div id="menu">
             <div id="menu-overlay" className={overlayClass()} onClick={handleToggleMenu}></div>
             <div id="slide" className={hiddenClass()}>
                 <div className="close-btn-wrapper" onClick={handleToggleMenu}>
@@ -52,16 +52,10 @@ const Header = () => {
                 </div>
                 <div className="menu-nav-wrapper">
                     <nav>
-                    <Link href="/groceries">
+                    <Link href="/securedData">
                             <div className="nav-item">
                                 <FontAwesomeIcon icon={faListOl} />
-                                <a>Groceries</a>
-                            </div>
-                        </Link>
-                        <Link href="/">
-                            <div className="nav-item">
-                                <FontAwesomeIcon icon={faListOl} />
-                                <a>Index</a>
+                                <a>Secured Data</a>
                             </div>
                         </Link>
                         <div className="nav-item" onClick={handleSignOut}>

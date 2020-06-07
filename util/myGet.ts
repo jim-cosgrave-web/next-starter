@@ -20,7 +20,7 @@ export async function myGet(url: string, ctx: NextPageContext) {
         return;
 
        // return { status: 'First one!!!' };
-    } else if(resp.status === 401 && ctx.req) {
+    } else if (resp.status === 401 && ctx.req) {
         //
         // Server side
         //
@@ -29,8 +29,6 @@ export async function myGet(url: string, ctx: NextPageContext) {
         });
 
          ctx.res?.end();
-//        return;
-         //return { status: 'Second one' };
     } else {
         const json = await resp.json();
         return json;

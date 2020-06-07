@@ -13,10 +13,20 @@ const Layout = ({ children }) => {
         }
     }
 
+    function getWrapperClass() {
+        if (router.pathname === '/login') {
+            return null;
+        } else {
+            return  "page-wrapper";
+        }
+    }
+
     return (
         <div>
             {getHeader()}
-            {children}
+            <div className={getWrapperClass()}>
+                {children}
+            </div>
         </div>
     );
 };

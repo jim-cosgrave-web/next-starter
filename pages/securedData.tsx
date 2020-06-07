@@ -3,18 +3,18 @@ import { NextPageContext, NextPage } from 'next';
 import { myGet } from '../util/myGet';
 import { env } from '../util/environment';
 
-const apiUrl = env.apiUrl + 'groceries';
+const apiUrl = env.apiUrl + 'securedData';
 
-const Groceries = ({ groceries }) => {
+const Groceries = ({ data }) => {
     useEffect(() => {
         console.log('first thing');
     }, []);
 
     return (
         <div>
-            Groceries Page
+            <h1>Get Secured Server Data</h1>
             <pre>
-                {JSON.stringify(groceries, undefined, 2)}
+                {JSON.stringify(data, undefined, 2)}
             </pre>
         </div>
     );
@@ -22,7 +22,7 @@ const Groceries = ({ groceries }) => {
 
 Groceries.getInitialProps = async (ctx: NextPageContext) => {
     const json = await myGet(apiUrl, ctx);
-    return { groceries: json };
+    return { data: json };
 }
 
 export default Groceries;
