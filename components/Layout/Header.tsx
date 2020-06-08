@@ -39,6 +39,10 @@ const Header = () => {
         router.push('/login');
     }
 
+    function handleNav() {
+        handleToggleMenu();
+    }
+
     return (
         <div id="menu">
             <div id="menu-overlay" className={overlayClass()} onClick={handleToggleMenu}></div>
@@ -52,8 +56,8 @@ const Header = () => {
                 </div>
                 <div className="menu-nav-wrapper">
                     <nav>
-                    <Link href="/securedData">
-                            <div className="nav-item">
+                        <Link href="/securedData">
+                            <div className="nav-item" onClick={handleNav}>
                                 <FontAwesomeIcon icon={faListOl} />
                                 <a>Secured Data</a>
                             </div>

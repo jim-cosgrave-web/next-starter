@@ -47,7 +47,7 @@ const Login = () => {
     }
 
     async function handleSignUp() {
-        if(!valid) {
+        if (!valid) {
             return;
         }
 
@@ -70,7 +70,7 @@ const Login = () => {
 
         console.log(json);
 
-        if(resp.status !== 200) {
+        if (resp.status !== 200) {
             setError(true);
             setErrorMessage(json.status);
         } else {
@@ -120,7 +120,7 @@ const Login = () => {
 
     function handleKeyUp(e) {
         if (e.key.toLowerCase() === 'enter') {
-            if(!signUpFlow) {
+            if (!signUpFlow) {
                 handleLogin();
             } else {
                 handleSignUp();
@@ -134,16 +134,21 @@ const Login = () => {
         setSignUpFlow(!signUpFlow);
     }
 
+    function titleMessage() {
+        if (!signUpFlow) {
+            return "Log in to your account";
+        } else {
+            return "Sign up for an account";
+        }
+    }
+
     return (
         <div className="site-wrapper">
             <div className="login-wrapper">
                 <div className="login-top"></div>
                 <div className="login-left">
                     <div className="login-left-wrapper">
-                    <Link href="/">
-                        <a>Index</a>
-                    </Link>
-                        <h1>Log in to your account</h1>
+                        <h1>{titleMessage()}</h1>
                         <div className="login-form">
                             {errorMessageHTML()}
                             {signUpFlow && <div className="login-form-fieldset">
